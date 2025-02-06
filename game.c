@@ -30,10 +30,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine,
 
     RegisterClass(&wc);
 
-    HWND hwnd = CreateWindowEx(0,           // Optional window styles.
-                               CLASS_NAME,  // Window class
-                               L"Learn to Program Windows",  // Window text
-                               WS_OVERLAPPEDWINDOW,          // Window style
+    HWND hwnd = CreateWindowEx(0,                    // Optional window styles.
+                               CLASS_NAME,           // Window class
+                               L"lll",               // Window text
+                               WS_OVERLAPPEDWINDOW,  // Window style
 
                                // Size and position
                                CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
@@ -64,16 +64,31 @@ LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam,
                             LPARAM lParam) {
     switch (message) {
         case WM_PAINT: {
-            paintWithGDI(hWnd);
+            printf("WM_PAINT\n");
+            // paintWithGDI(hWnd);
+            paintWithDirect2d(hWnd);
+
+            // PAINTSTRUCT ps;
+            // HDC hdc = BeginPaint(hWnd, &ps);
+
+            // // All painting occurs here, between BeginPaint and EndPaint.
+
+            // // HBRUSH myHBrush = CreateSolidBrush(rgbRed);
+            // FillRect(hdc, &ps.rcPaint, (HBRUSH)(17 + 1));
+
+            // EndPaint(hWnd, &ps);
+
             break;
         }
 
-            // case WM_PAINT: {
-            //     paintWithDirect2d(hWnd);
-            //     break;
-            // }
+        case WM_SIZE: {
+            printf("WM_SIZE\n");
+            // paintWithDirect2d(hWnd);
+            break;
+        }
 
         case WM_DESTROY: {
+            printf("WM_DESTROY\n");
             PostQuitMessage(0);
             break;
         }

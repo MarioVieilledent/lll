@@ -1,0 +1,1 @@
+gcc game.c paint.c -o game.exe -lgdi32

@@ -9,12 +9,24 @@ A game in c for Windows
 
 ## Build command
 
-`gcc game.c -o game.exe -lgdi32 -mwindows`
+### Minimal command
+
+`gcc game.c paint.c -o game.exe`
+
+### Small exe file build command
+
+`gcc game.c paint.c -o game.exe -mwindows -Os -s -w -ffunction-sections -fdata-sections -Wl,--gc-sections -fno-ident -fno-asynchronous-unwind-tables -fomit-frame-pointer`
 
 Description
 
-- `-mwindows` Tells the linker that this is a GUI application, preventing a console window from opening.
 - `-lgdi32` Links the GDI (Graphics Device Interface) library, which is part of the Windows API used for rendering graphics.
+- `-mwindows` Tells the linker that this is a GUI application, preventing a console window from opening.
+- `-Os` Optimize for size.
+- `-s` Strip all symbols from the executable.
+- `-ffunction-sections -fdata-sections -Wl,--gc-sections` Enable garbage collection of unused functions and data.
+- `-fno-ident` Remove the GCC version string from the binary.
+- `-fno-asynchronous-unwind-tables` Prevent generation of unwind tables (not needed for simple applications).
+- `-fomit-frame-pointer` Omits the frame pointer where possible, reducing binary size.
 
 ## Ressources
 
