@@ -1,35 +1,50 @@
 #include "paint.h"
 
+#include <stdio.h>
 #include <windows.h>
+#define SQUARE 16
 
-void paintWithDirect2d(HWND hWnd) {
-    PAINTSTRUCT ps;
-    BeginPaint(hWnd, &ps);
+// void rect(HWND hWnd, PAINTSTRUCT ps, HPEN hpen, HBRUSH hbrush, int left,
+//           int top, int right, int bottom, int r, int g, int b) {
+//     // Draw rectangle
+//     Rectangle(ps.hdc, left, top, right, bottom);
+// }
 
-    // Obtain the size of the drawing area.
-    RECT rc;
-    GetClientRect(hWnd, &rc);
-
+void render(HWND hWnd, HDC hdc, int right, int bottom) {
     // Save the original object
     HGDIOBJ original = NULL;
-    original = SelectObject(ps.hdc, GetStockObject(DC_PEN));
+    original = SelectObject(hdc, GetStockObject(DC_PEN));
 
-    // Create a pen.
-    HPEN blackPen = CreatePen(PS_SOLID, 3, 0);
+    HPEN hpen;
+    HBRUSH hbrush;
 
-    // Select the pen.
-    SelectObject(ps.hdc, blackPen);
+    hpen = CreatePen(PS_NULL, 1, RGB(0, 0, 0));
+    hbrush = CreateSolidBrush(RGB(100, 100, 100));
+    SelectObject(hdc, hpen);
+    SelectObject(hdc, hbrush);
 
-    // Draw a rectangle.
-    Rectangle(ps.hdc, rc.left + 100, rc.top + 100, rc.right - 100,
-              rc.bottom - 100);
+    Rectangle(hdc, 0, 0, right, bottom);
 
-    DeleteObject(blackPen);
+    hpen = CreatePen(PS_SOLID, 1, RGB(50, 150, 200));
+    hbrush = CreateSolidBrush(RGB(50, 150, 200));
+    SelectObject(hdc, hpen);
+    SelectObject(hdc, hbrush);
+
+    for (int x = 0; x <= right / SQUARE; x++) {
+        for (int y = 0; y <= bottom / SQUARE; y++) {
+            Rectangle(hdc, SQUARE * x, SQUARE * y, SQUARE * (x + 1),
+                      SQUARE * (y + 1));
+        }
+    }
+
+    DeleteObject(hpen);
+    DeleteObject(hbrush);
+
+    // MoveToEx(hdc, 20, 80, NULL);
+    // LineTo(hdc, 200, 200);
 
     // Restore the original object
-    SelectObject(ps.hdc, original);
-
-    EndPaint(hWnd, &ps);
+    SelectObject(hdc, original);
 }
 
 void paintWithGDI(HWND hWnd) {

@@ -2,9 +2,10 @@
 #define PAINT_H
 
 #include <windows.h>
+
 #include "paint.h"
 
-void paintWithDirect2d(HWND hWnd);
+void render(HWND hWnd, HDC hdc, int right, int bottom);
 void paintWithGDI(HWND hWnd);
 
 #endif
