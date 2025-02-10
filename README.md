@@ -28,6 +28,10 @@ Description
 - `-fno-asynchronous-unwind-tables` Prevent generation of unwind tables (not needed for simple applications).
 - `-fomit-frame-pointer` Omits the frame pointer where possible, reducing binary size.
 
+### UPX to compress the exe size
+
+- `upx game.exe -o lll.exe`
+
 ## Ressources
 
 - [Windows API tutorials](https://learn.microsoft.com/en-us/windows/win32/learnwin32/your-first-windows-program)
